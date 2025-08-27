@@ -2,3 +2,4 @@
 /spring-boot-non-jwt/target
 /spring-boot-non-jwt/*.classpath
 /spring-boot-non-jwt/*.project
+/*.project
