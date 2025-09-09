@@ -1,18 +1,102 @@
 package com.javaweb.repository.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.boot.model.relational.SqlStringGenerationContext;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "building")
 public class BuildingEntity {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "ward")
 	private String ward;
+	
+	@Column(name = "street")
 	private String street;
-	private Long districtId;
+	
+//	@Column(name = "districtid")
+//	private Long districtId;
+	
+	@Column(name = "managername")
 	private String managerName;
+	
+	@Column(name = "managerphonenumber")
 	private String managerPhoneNumber;
+	
+	@Column(name = "floorarea")
 	private Long floorArea;
-	private String emptyArea;
+	
+//	@Column(name = "emptyarea")
+//	private String emptyArea;
+	
+	@Column(name = "rentprice")
 	private Long rentPrice;
+	
+	@Column(name = "servicefee")
 	private String serviceFee;
+	
+	@Column(name = "brokeragefee")
 	private String brokerageFee;
+	
+	@Column(name = "direction")
+	private String diretion;
+	
+	@Column(name = "level")
+	private String level;
+	
+	public String getDiretion() {
+		return diretion;
+	}
+	public void setDiretion(String diretion) {
+		this.diretion = diretion;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "districtid")
+	private DistrictEntity district;
+	public DistrictEntity getDistrict() {
+		return district;
+	}
+	
+	@OneToMany(mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RentAreaEntity> rentareas = new ArrayList<>();
+
+	
+	public List<RentAreaEntity> getRentareas() {
+		return rentareas;
+	}
+	public void setRentareas(List<RentAreaEntity> rentareas) {
+		this.rentareas = rentareas;
+	}
+	public void setDistrict(DistrictEntity district) {
+		this.district = district;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -37,12 +121,6 @@ public class BuildingEntity {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public Long getDistrictId() {
-		return districtId;
-	}
-	public void setDistrictId(Long districtId) {
-		this.districtId = districtId;
-	}
 	public String getManagerName() {
 		return managerName;
 	}
@@ -61,12 +139,12 @@ public class BuildingEntity {
 	public void setFloorArea(Long floorArea) {
 		this.floorArea = floorArea;
 	}
-	public String getEmptyArea() {
-		return emptyArea;
-	}
-	public void setEmptyArea(String emptyArea) {
-		this.emptyArea = emptyArea;
-	}
+//	public String getEmptyArea() {
+//		return emptyArea;
+//	}
+//	public void setEmptyArea(String emptyArea) {
+//		this.emptyArea = emptyArea;
+//	}
 	public Long getRentPrice() {
 		return rentPrice;
 	}

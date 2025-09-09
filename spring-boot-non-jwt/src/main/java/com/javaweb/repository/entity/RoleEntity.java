@@ -13,46 +13,42 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "district")
-public class DistrictEntity {
-	
+@Table(name = "role")
+public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
-	@Column(name = "code")
+	
+	@Column(name = "code", unique = true, nullable= false)
 	private String code;
 	
-	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
-	private List<BuildingEntity> buildings = new ArrayList<>();
-	
-	public List<BuildingEntity> getBuildings() {
-		return buildings;
-	}
-	public void setBuildings(List<BuildingEntity> buildings) {
-		this.buildings = buildings;
-	}
+	@OneToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+	private List<UserEntity> users = new ArrayList<>();
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	
-
 }
