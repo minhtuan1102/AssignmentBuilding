@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import com.javaweb.model.BuildingDTO;
 import com.javaweb.model.BuildingResquestDTO;
 import com.javaweb.model.ErrorRespondDTO;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.entity.BuildingEntity;
 import com.javaweb.repository.entity.DistrictEntity;
 import com.javaweb.service.BuildingService;
@@ -36,10 +37,14 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 @RestController
+@Transactional
 public class BuildingAPI {
 	
 	@Autowired			
 	private BuildingService buildingService;
+	
+	@Autowired
+	private BuildingRepository buildingRepository;
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -51,8 +56,14 @@ public class BuildingAPI {
 		return result;	
 	}
 	
+	@GetMapping(value = "/api/building/{id}")
+	public BuildingDTO GetBuildingById(@PathVariable Long id) {
+		BuildingDTO result = new BuildingDTO();
+		BuildingEntity building = buildingRepository.findById(id).get(); 
+		return result;	
+	}
+	
 	@PostMapping(value = "/api/building/")
-	@Transactional
 	public void createBuilding(@RequestBody BuildingResquestDTO buildingResquestDTO) {
 		BuildingEntity builEntity = new BuildingEntity();	
 		builEntity.setName(buildingResquestDTO.getName()); 
@@ -65,7 +76,6 @@ public class BuildingAPI {
 		System.out.println("ok");
 }
 	@PutMapping(value = "/api/building/")
-	@Transactional
 	public void updateBuilding(@RequestBody BuildingResquestDTO buildingResquestDTO) {
 		BuildingEntity builEntity = new BuildingEntity();	
 		builEntity.setId(1L);
@@ -78,11 +88,8 @@ public class BuildingAPI {
 		entityManager.merge(builEntity);
 		System.out.println("ok");
 }
-	@DeleteMapping(value = "api/building/{id}")
-	@Transactional
-	public void deleteBuilding(@PathVariable Long id) {
-		BuildingEntity buildingEntity = entityManager.find(BuildingEntity.class, id);
-		entityManager.remove(buildingEntity);
-		System.out.print("Da xoa toa nha co id la " + id + " roi");
+	@DeleteMapping(value = "api/building/{ids}")
+	public void deleteBuilding(@PathVariable Long[] ids) {
+		buildingRepository.deleteByIdIn(ids);
 	}
 }

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.repository.entity.BuildingEntity;
 
-public interface BuildingRepository {
-	List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder); 
+public interface BuildingRepository extends JpaRepository<BuildingEntity, Long> {
+	void deleteByIdIn(Long[] ids);
 }

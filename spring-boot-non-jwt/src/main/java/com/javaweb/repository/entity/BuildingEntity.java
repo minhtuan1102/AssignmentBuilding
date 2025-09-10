@@ -58,24 +58,24 @@ public class BuildingEntity {
 	@Column(name = "brokeragefee")
 	private String brokerageFee;
 	
-	@Column(name = "direction")
-	private String diretion;
-	
-	@Column(name = "level")
-	private String level;
-	
-	public String getDiretion() {
-		return diretion;
-	}
-	public void setDiretion(String diretion) {
-		this.diretion = diretion;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
+//	@Column(name = "direction")
+//	private String diretion;
+//	
+//	@Column(name = "level")
+//	private String level;
+//	
+//	public String getDiretion() {
+//		return diretion;
+//	}
+//	public void setDiretion(String diretion) {
+//		this.diretion = diretion;
+//	}
+//	public String getLevel() {
+//		return level;
+//	}
+//	public void setLevel(String level) {
+//		this.level = level;
+//	}
 
 	@ManyToOne
 	@JoinColumn(name = "districtid")
