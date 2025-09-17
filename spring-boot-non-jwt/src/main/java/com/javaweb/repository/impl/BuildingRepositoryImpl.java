@@ -63,7 +63,8 @@ public class BuildingRepositoryImpl implements  BuildingRepository {
 					 if(value != null) {
 						 if(item.getType().getName().equals("java.lang.Long")) {
 			                    where.append(" AND b." + fieldName +" = "+ value);
-			                } else {
+			                }
+						 else {
 			                	where.append(" AND b." + fieldName +" LIKE '%"+ value + "%'");
 			                }
 			         
@@ -86,7 +87,7 @@ public class BuildingRepositoryImpl implements  BuildingRepository {
 	    Long rentAreaTo = buildingSearchBuilder.getAreaTo();
 	    Long rentAreaFrom = buildingSearchBuilder.getAreaFrom();
 	    if(rentAreaFrom != null || rentAreaTo != null) {
-	    	where.append(" AND EXISTS (SELECT * FROM rentarea r WHERE b.id = r.buildingid");
+	    	where.append(" AND EXISTS (SELECT * FROM rentarea r WHERE b.id = r.buildingid ");
 	        if(rentAreaFrom != null) {
 	            where.append(" AND r.value >= " + rentAreaFrom);
 	        }
@@ -118,7 +119,7 @@ public class BuildingRepositoryImpl implements  BuildingRepository {
 	    List<String> typeCode = buildingSearchBuilder.getTypeCode();
 	    if(typeCode != null && typeCode.size() > 0) {
 	    	where.append(" AND(");
-	    	String sql = typeCode.stream().map(it->"renttype.code Like" + "'%" + it + "%'").collect(Collectors.joining(" OR "));
+	    	String sql = typeCode.stream().map(it->"renttype.code Like " + "'%" + it + "%'").collect(Collectors.joining(" OR "));
 	    	where.append(sql);
 	    	where.append(" ) ");
 	    }
@@ -128,10 +129,10 @@ public class BuildingRepositoryImpl implements  BuildingRepository {
 	public List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder) {
 		StringBuilder sql = new StringBuilder("SELECT DISTINCT b.id, b.name, b.districtid, b.street, b.ward, b.numberofbasement, b.floorarea, b.rentprice, " + " b.managername, b.managerphonenumber, b.servicefee,b.brokeragefee" + "\nFROM building b ");
 		joinTable(buildingSearchBuilder, sql);
-		StringBuilder where = new StringBuilder(" WHERE 1=1");
+		StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 		queryNormal(buildingSearchBuilder,where);
-		querySpecial(buildingSearchBuilder, where);
-		where.append(" GROUP BY b.id;");
+		querySpecial(buildingSearchBuilder,where);
+		where.append(" GROUP BY b.id ");
 		sql.append(where);	
 		System.out.print(sql);
 		List<BuildingEntity> result = new ArrayList<>();

@@ -48,7 +48,7 @@ public class BuildingSearchBuilder {
 	public String getStreet() {
 		return street;
 	}
-	public Long getDistrictcode() {
+	public Long getDistrictId() {
 		return districtId;
 	}
 	public Integer getNumberOfBasement() {
